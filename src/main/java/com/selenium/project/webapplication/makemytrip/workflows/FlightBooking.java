@@ -8,6 +8,7 @@ import com.selenium.project.webapplication.makemytrip.pages.CommonActions;
 import com.selenium.project.webapplication.makemytrip.pages.FlightsRepository;
 import lombok.Getter;
 import org.openqa.selenium.Keys;
+import org.testng.Reporter;
 
 import java.text.ParseException;
 
@@ -25,11 +26,12 @@ public class FlightBooking {
         DriverWait.getInstance().WaitForElementVisible(flightRepo.getLoginFrameCloseButton(),5);
         ActionsUtils.click(flightRepo.getLoginFrameCloseButton());
         ActionsUtils.click(flightRepo.getFlightMenuLink());
-
+        Reporter.log("Clicked on Flight menu link");
         DriverWait.getInstance().WaitForElementVisible(flightRepo.getFrom(),5);
 
         if(flightBookingEntity.getTripType()!= null){
             flightRepo.getTripTypeRadioButton(flightBookingEntity.getTripType()).click();
+            Reporter.log("Selected Trip Type : "+flightBookingEntity.getTripType());
         }
         if(flightBookingEntity.getFrom()!= null){
             flightRepo.getFrom().click();
@@ -38,6 +40,7 @@ public class FlightBooking {
             ActionsUtils.pause(1).sendKeys(Keys.ENTER).build().perform();
             DriverWait.getInstance().WaitForElementClickable(flightRepo.getSearchedOption(flightBookingEntity.getFrom()),5);
             ElementOperations.clickOnWebElement(flightRepo.getSearchedOption(flightBookingEntity.getFrom()));
+            Reporter.log("From Destination Entered : "+flightBookingEntity.getFrom());
         }
         if(flightBookingEntity.getTo()!= null){
             flightRepo.getTo().sendKeys(Keys.ENTER);
@@ -46,17 +49,21 @@ public class FlightBooking {
             ActionsUtils.pause(1).sendKeys(Keys.ENTER).build().perform();
             DriverWait.getInstance().WaitForElementClickable(flightRepo.getSearchedOption(flightBookingEntity.getTo()),5);
             ElementOperations.clickOnWebElement(flightRepo.getSearchedOption(flightBookingEntity.getTo()));
+            Reporter.log("To Destination Entered : "+flightBookingEntity.getTo());
         }
         if(flightBookingEntity.getDepartureDate()!=null){
 //            flightRepo.getDepartureDateInputLink().click();
             new CommonActions().SelectDateFromCalender(flightBookingEntity.getDepartureDate(),"dd.MMM.yyyy");
+            Reporter.log("Departure Date Selected : "+flightBookingEntity.getDepartureDate());
         }
         if(flightBookingEntity.getReturnDate()!=null){
 //            flightRepo.getReturnDateInputLink().click();
             new CommonActions().SelectDateFromCalender(flightBookingEntity.getReturnDate(),"dd.MMM.yyyy");
+            Reporter.log("Return Date Selected : "+flightBookingEntity.getReturnDate());
         }
         if(flightBookingEntity.isSearchButton()){
             flightRepo.getSearchButton().click();
+            Reporter.log("Clicked on Search Button");
             networkProblem =flightRepo.getNetworkProblemError().getText();
         }
         return this;

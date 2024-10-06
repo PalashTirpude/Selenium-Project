@@ -21,7 +21,7 @@ public class ExtentReporterManager {
             extentSparkReporter= new ExtentSparkReporter(createReportPath());
         }
         extentSparkReporter.config().setReportName("Functional Testing");
-        extentSparkReporter.config().setDocumentTitle("Make_My_Trip_Automation "+ TestConfig.testName);
+        extentSparkReporter.config().setDocumentTitle(TestConfig.testName);
         extentSparkReporter.config().setTheme(Theme.DARK);
 
         extentReports = new ExtentReports();
